@@ -1,0 +1,22 @@
+<div class="d-flex" style="min-width: 640px">
+  <app-navbar></app-navbar>
+
+  <div class="container-fluid bg-body-secondary m-0 p-0 min-vh-100">
+    <app-user-profile-bar></app-user-profile-bar>
+
+    <div class="m-0 p-0">
+      <h1 class="ms-4 fs-3 text-primary">Users Dashboard</h1>
+      <app-user-list></app-user-list>
+    </div>
+  </div>
+
+</div>
+
+<div class="card-user-container-modal" [ngClass]="{'d-block': isAddUserModalVisible, 'd-none': !isAddUserModalVisible}">
+  <app-add-user></app-add-user>
+</div>
+
+<div class="card-user-container-modal"
+  [ngClass]="{'d-block': isEditUserModalVisible, 'd-none': !isEditUserModalVisible}">
+  <app-edit-user></app-edit-user>
+</div>

@@ -1,0 +1,156 @@
+<div class="card h-100">
+
+    <div class="card-header bg-white d-flex justify-content-between">
+        <h3 class="card-title">Add User</h3>
+        <button type="button" class="border-0 bg-transparent" (click)="closeAddUserModal()">
+            <i class="bi bi-x-lg"></i>
+        </button>
+    </div>
+
+    <div class="card-body">
+
+        <form #form="ngForm" (ngSubmit)="onFormSubmit()" novalidate>
+            <div class="mt-3" *ngIf="newUserId">
+                <input type="text" class="form-control" placeholder="User ID *" name="userId" [value]="[newUserId]"
+                    disabled readonly required>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Firstname *" name="firstname"
+                        [(ngModel)]="model.firstName" required>
+
+                    <div *ngIf="form.controls['firstname']?.invalid && form.controls['firstname']?.touched"
+                        class="text-danger ms-2">
+                        <small *ngIf="form.controls['firstname']?.errors?.['required']">Lastname is required.</small>
+                    </div>
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Lastname *" name="lastname"
+                        [(ngModel)]="model.lastName" required>
+
+                    <div *ngIf="form.controls['lastname']?.invalid && form.controls['lastname']?.touched"
+                        class="text-danger ms-2">
+                        <small *ngIf="form.controls['lastname']?.errors?.['required']">Lastname is required.</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col">
+                    <input type="email" class="form-control" placeholder="Email ID *" name="email"
+                        [(ngModel)]="model.email" required>
+
+                    <div *ngIf="form.controls['email']?.invalid && form.controls['email']?.touched"
+                        class="text-danger ms-2">
+                        <small *ngIf="form.controls['email']?.errors?.['required']">Email is required.</small>
+                    </div>
+                </div>
+                <div class="col">
+                    <input type="tel" class="form-control" placeholder="Mobile No." name="phone"
+                        [(ngModel)]="model.phone">
+                </div>
+                <div class="col">
+                    <ng-container *ngIf="roles">
+                        <select class="form-select" name="roleId" [(ngModel)]="model.roleId" required>
+                            <option value="" disabled selected>Select Role Type</option>
+                            <option *ngFor="let role of roles" [value]="role.roleId">{{role.roleName}}</option>
+                        </select>
+
+                        <div *ngIf="form.controls['roleId']?.invalid && form.controls['roleId']?.touched"
+                            class="text-danger ms-2">
+                            <small *ngIf="form.controls['roleId']?.errors?.['required']">Role type is required.</small>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Username *" name="username"
+                        [(ngModel)]="model.username" required>
+
+                    <div *ngIf="form.controls['username']?.invalid && form.controls['username']?.touched"
+                        class="text-danger ms-2">
+                        Username is required.
+                    </div>
+                </div>
+                <div class="col">
+                    <input type="password" class="form-control" placeholder="Password *" name="password"
+                        [(ngModel)]="model.password" required minlength="6">
+
+                    <div *ngIf="form.controls['password']?.invalid && form.controls['password']?.touched"
+                        class="text-danger ms-2">
+                        <small *ngIf="form.controls['password']?.errors?.['required']">Password is required.</small>
+                        <small *ngIf="form.controls['password']?.errors?.['minlength']">Password must be at least 6
+                            characters.</small>
+                    </div>
+                </div>
+                <div class="col">
+                    <input type="password" class="form-control" placeholder="Confirm Password *" name="confirmPassword"
+                        [(ngModel)]="model.confirmPassword" required minlength="6">
+
+                    <div *ngIf="form.controls['confirmPassword']?.invalid && form.controls['confirmPassword']?.touched"
+                        class="text-danger ms-2">
+                        <small *ngIf="form.controls['confirmPassword']?.errors?.['required']">Confirm password is
+                            required.</small>
+                        <small *ngIf="form.controls['confirmPassword']?.errors?.['minlength']">Confirm password must be
+                            at least 6 characters.</small>
+                    </div>
+                </div>
+            </div>
+
+            <ng-container *ngIf="permissions">
+                <div class="mt-3 permission-table">
+                    <table class="table align-middle">
+                        <thead class="table-secondary position-sticky top-0" style="z-index: 1;">
+                            <tr>
+                                <th>Module Permission</th>
+                                <th class="text-center">Read</th>
+                                <th class="text-center">Write</th>
+                                <th class="text-center">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let permission of permissions; let i = index"
+                                (click)="selectPermission(i, permission.permissionId, permission.isReadable, permission.isWritable, permission.isDeleatable)"
+                                [class.table-primary]="i === selectedPermissionIndex" style="cursor: pointer;">
+                                <td>
+                                    {{permission.permissionName}}
+                                </td>
+                                <td class="text-center">
+                                    <i class="bi" [ngClass]="{'bi-check-square-fill': permission.isReadable, 'bi-square': !permission.isReadable}"></i>
+                                </td>
+                                <td class="text-center">
+                                    <i class="bi" [ngClass]="{'bi-check-square-fill': permission.isWritable, 'bi-square': !permission.isWritable}"></i>
+                                </td>
+                                <td class="text-center">
+                                    <i class="bi" [ngClass]="{'bi-check-square-fill': permission.isDeleatable, 'bi-square': !permission.isDeleatable}"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </ng-container>
+
+
+            <div class="d-flex justify-content-end mt-2">
+                <button type="submit" class="btn btn-sm btn-primary rounded-3 px-4 me-3" [disabled]="form.invalid">Add
+                    User</button>
+                <button type="button" class="btn btn-sm px-4" (click)="closeAddUserModal()">Cancel</button>
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
+<div *ngIf="mismatchPasswordCfPassword" class="position-fixed start-50 translate-middle-x top-0 mt-2">
+    <div class="alert alert-danger" role="alert">
+        {{mismatchPasswordCfPassword}}
+    </div>
+</div>

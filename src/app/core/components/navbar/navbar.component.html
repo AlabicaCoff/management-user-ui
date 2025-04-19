@@ -1,0 +1,66 @@
+<nav class="nav">
+    <div class="container ps-3 ps-lg-4 pe-0" style="min-width: max-content;">
+        <div class="mt-4">
+            <span class="navbar-brand mb-0 h1 fs-4">YOURLOGO</span>
+        </div>
+
+        <div class="mt-2 mt-md-4">
+            <ul class="navbar-nav flex-column">
+                <li class="nav-item d-flex mt-3 pe-4 pe-lg-5" [ngClass]="isDashboardPage ? 'border-end border-4 border-primary' : ''">
+                    <a class="nav-link fs-5" [routerLink]="['/dashboard']" [class.text-primary]="isDashboardPage">
+                        <i class="bi bi-command me-2"></i>
+                        Dashboard
+                    </a>
+
+                </li>
+                <li class="nav-item d-flex mt-3 pe-4 pe-lg-5">
+                    <a class="nav-link fs-5">
+                        <i class="bi bi-bar-chart-fill me-2"></i>
+                        Users
+                    </a>
+                </li>
+                <li class="nav-item mt-3 pe-4 pe-lg-5" [ngClass]="isDocumentsPage ? 'border-end border-4 border-primary' : ''">
+                    <a class="nav-link fs-5" [routerLink]="['/documents']" [class.text-primary]="isDocumentsPage">
+                        <i class="bi bi-file-earmark-text me-2"></i>
+                        Documents
+                    </a>
+                </li>
+                <li class="nav-item mt-3 pe-4 pe-lg-5">
+                    <a class="nav-link fs-5">
+                        <i class="bi bi-image me-2"></i>
+                        Photos
+                    </a>
+                </li>
+                <li class="nav-item mt-3">
+                    <a class="nav-link fs-5">
+                        <i class="bi bi-diagram-2 me-2"></i>
+                        Hierarchy
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-2 mt-md-4">
+            <ul class="navbar-nav flex-column">
+                <li class="nav-item d-flex mt-3 pe-4 pe-lg-5">
+                    <a class="nav-link fs-5">
+                        <i class="bi bi-chat-left-dots me-2"></i>
+                        Message
+                    </a>
+                </li>
+                <li class="nav-item d-flex mt-3 pe-4 pe-lg-5">
+                    <a class="nav-link fs-5">
+                        <i class="bi bi-question-circle me-2"></i>
+                        Help
+                    </a>
+                </li>
+                <li class="nav-item d-flex mt-3 pe-4 pe-lg-5">
+                    <a class="nav-link fs-5">
+                        <i class="bi bi-gear me-2"></i>
+                        Settings
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

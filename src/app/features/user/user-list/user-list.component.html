@@ -1,0 +1,145 @@
+<form (change)="onFormChange()" class="mx-3 mt-3 position-relative" style="min-height: 85vh">
+    <div>
+        <div class="d-flex flex-column flex-lg-row">
+            <div class="d-flex align-items-center position-relative flex-grow-1">
+                <i class="border-0 bi-search position-absolute" style="left: 1rem"></i>
+                <input type="text" class="form-control border-0 ps-5 h-100 rounded-4" placeholder="Search" name="search"
+                    id="search" [(ngModel)]="model.search" />
+            </div>
+
+            <div class="d-flex mt-2 ms-lg-4 mt-lg-0 justify-content-center justify-content-lg-start">
+                <button type="button" class="btn btn-primary border-0 me-4" (click)="sendClickAddUserModal()"
+                    [disabled]="!isWritable()">
+                    Add user
+                    <i class="bi bi-plus"></i>
+                </button>
+
+                <div class="d-flex align-items-center">
+                    <div class="">
+                        <select class="fw-bold border-0 bg-transparent" name="sortBy" id="sortBy"
+                            [(ngModel)]="model.orderBy">
+                            <option value="">Sort By</option>
+                            <option value="Firstname">Firstname</option>
+                            <option value="Lastname">Lastname</option>
+                            <option value="Email">Email</option>
+                            <option value="CreatedDate">Create Date</option>
+                        </select>
+                    </div>
+
+                    <div class="ms-2">
+                        <button type="button" class="btn btn-light" (click)="sort('asc')">
+                            <i class="bi bi-arrow-up"></i>
+                        </button>
+                        <button type="button" class="btn btn-light ms-2" (click)="sort('desc')">
+                            <i class="bi bi-arrow-down"></i>
+                        </button>
+                    </div>
+
+                    <button type="button" class="ms-4 fs-3 border-0 bg-transparent">
+                        <i class="bi bi-sliders"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid mx-0 p-0 my-2 my-md-4">
+            <div class="bg-white rounded-top-4 p-3 shadow-sm">
+                <h2 class="fs-4 mb-0">List Users</h2>
+            </div>
+
+            <ng-container *ngIf="response; else noData">
+                <div class="rounded-bottom-4" style="max-height: 55vh; overflow-y: auto;">
+                  <table class="table align-middle mb-0">
+                    <thead class="table-secondary text-secondary sticky-top bg-light" style="top: 0; z-index: 1;">
+                      <tr>
+                        <th class="ps-4" style="min-width: 250px">Name</th>
+                        <th>Create Date</th>
+                        <th>Role</th>
+                        <th [class.d-none]="!isWritable() && !isDeletable()">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                        <tr class="border-bottom" *ngFor="let user of response.dataSource">
+                          <td class="px-4" style="min-width: 250px">
+                            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+                              <div class="ms-4">
+                                <div class="fw-semibold">
+                                  {{ user.firstName }} {{ user.lastName }}
+                                </div>
+                                <div class="text-muted small">{{ user.email }}</div>
+                              </div>
+                              <span
+                                class="badge bg-primary fw-normal fs-6 py-2 px-3 mt-2 mt-md-0 text-truncate d-inline-block"
+                                [ngClass]="{
+                                  'bg-secondary-subtle': !isAdmin(user.permissions[0].permissionName),
+                                  'text-dark': !isAdmin(user.permissions[0].permissionName)
+                                }" style="width: 150px">
+                                {{ user.permissions[0].permissionName }}
+                              </span>
+                            </div>
+                          </td>
+                          <td>{{ user.createdDate | date: 'dd MMM, y' }}</td>
+                          <td>{{ user.role.roleName }}</td>
+                          <td [class.d-none]="!isWritable() && !isDeletable()">
+                            <button type="button" class="btn btn-link text-secondary p-0 fs-5"
+                              (click)="sendClickEditUserModal(user.userId)" [class.d-none]="!isWritable()"
+                              [disabled]="!isWritable()">
+                              <i class="bi bi-pencil-square"></i>
+                            </button>
+                            <button type="button" class="btn btn-link text-secondary p-0 fs-5 ms-3"
+                              (click)="onDeleteUser(user.userId)" [class.d-none]="!isDeletable()"
+                              [disabled]="!isDeletable()">
+                              <i class="bi bi-trash3"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                  </table>
+                </div>
+              </ng-container>
+              
+
+            <ng-template #noData>
+                <div class="mt-5 text-center fw-bold fs-4">
+                    You do not have the necessary permissions to access this data.
+                </div>
+            </ng-template>
+
+        </div>
+    </div>
+
+    <div class="container" *ngIf="response">
+        <div class="position-absolute bottom-0 start-50 translate-middle-x mb-3">
+            <div class="d-flex align-items-center bg-white p-3 rounded-4">
+                <div>
+                    <label class="me-2 me-md-5" for="pageSize">Items per page:
+                    </label>
+                    <input class="border-0 border-bottom border-2 border-secondary bg-transparent" type="number"
+                        id="pageSize" name="pageSize" min="1" max="100" value="5" [(ngModel)]="model.pageSize" />
+                </div>
+
+                <div class="ms-2 ms-md-5">
+                    <span>
+                        {{ response.page }}-{{
+                        response.page * response.pageSize > response.totalCount
+                        ? response.totalCount
+                        : response.page * response.pageSize
+                        }}
+                        of {{ response.totalCount }}
+                    </span>
+                </div>
+
+                <div class="ms-2 ms-md-5 fs-3">
+                    <button type="button" class="border-0 bg-transparent" (click)="getPrevPage()"
+                        [disabled]="response.page - 1 < 1">
+                        <i class="bi bi-arrow-left-short"></i>
+                    </button>
+                    <button type="button" class="border-0 bg-transparent ms-3" (click)="getNextPage()"
+                        [disabled]="response.page + 1 > pageLength">
+                        <i class="bi bi-arrow-right-short"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
