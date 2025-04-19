@@ -3,12 +3,16 @@
 ## Introduction
 Management User Web UI is a web-based application interface designed to integrate with the Management User Web API, enabling system administrators to manage user accounts, roles, and permissions.
 
-## Management User Web UI Features
-* Public (non-authenticated) users can not access to the website
-* Login Page: Users can signup and login to their accounts
-* Documents Page: Users can see list of documents mock data
-* Users Dashboard: Only authenticated users can manage existing user on the system based on their assigned permissions
+## Features
+
+| Path | Page | Description |
+| --- | --- | --- |
+| /login | Login Page | Users can signup and login to their accounts. |
+| /documents | Documents Page | Users can see list of documents mock data. |
+| /dashboard | Users Dashboard | Only authenticated users can manage existing user on the system based on their assigned permissions |
+
 * For example, employee role's user can read only other user details but can not create, update, and delete user details, roles, and permissions
+* Public (non-authenticated) users can not access to the website
 
 ## Development Quickstart
 This section offers a basic tutorial to tell you how to set up the UI project.
