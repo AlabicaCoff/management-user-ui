@@ -27,10 +27,10 @@
                     </div>
 
                     <div class="ms-2">
-                        <button type="button" class="btn btn-light" (click)="sort('asc')">
+                        <button type="button" class="btn" (click)="sort('asc')" [class]="[model.orderDirection === 'asc' ? 'btn-primary': 'btn-light']" [class.disabled]="model.orderBy === ''">
                             <i class="bi bi-arrow-up"></i>
                         </button>
-                        <button type="button" class="btn btn-light ms-2" (click)="sort('desc')">
+                        <button type="button" class="btn ms-2" (click)="sort('desc')" [class]="[model.orderDirection !== 'asc' ? 'btn-primary': 'btn-light']" [class.disabled]="model.orderBy === ''">
                             <i class="bi bi-arrow-down"></i>
                         </button>
                     </div>
