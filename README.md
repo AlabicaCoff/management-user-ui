@@ -1,27 +1,40 @@
-# ManagementUser
+# Management User Web UI
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.2.
+## Introduction
+Management User Web UI is a web-based application interface designed to integrate with the Management User Web API, enabling system administrators to manage user accounts, roles, and permissions.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+| Path | Page | Description |
+| --- | --- | --- |
+| /login | Login Page | Users can signup and login to their accounts. |
+| /documents | Documents Page | Users can see list of documents mock data. |
+| /dashboard | Users Dashboard | Only authenticated users can manage existing user on the system based on their assigned permissions |
 
-## Code scaffolding
+* For example, employee role's user can read only other user details but can not create, update, and delete user details, roles, and permissions
+* Public (non-authenticated) users can not access to the website
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Development Quickstart
+This section offers a basic tutorial to tell you how to set up the UI project.
 
-## Build
+### Prerequisites
+* [VS Code](https://code.visualstudio.com/download)
+* [Node.js](https://nodejs.org/en/download)
+* [Angular CLI 16.0.2](https://angular.dev/tools/cli/setup-local)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Installation Guide
+* Clone this repository [here](https://github.com/AlabicaCoff/management-user-ui.git)
+* Run ```npm install``` to install all dependencies
 
-## Running unit tests
+## Usage
+* Run ```ng serve --open``` to start the application
+* Run the API project and Connect to the frontend on port 7263
+* Go to localhost port 4200 to see the website
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Technologies Used
+* [NodeJS](https://nodejs.org/)
+* [Angular](https://angular.dev/)
+* [Bootstrap](https://getbootstrap.com/)
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Authors
+* [AlabicaCoff](https://github.com/AlabicaCoff)
